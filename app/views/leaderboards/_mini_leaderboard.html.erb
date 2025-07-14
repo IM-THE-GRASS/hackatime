@@ -2,11 +2,11 @@
   <% if leaderboard.present? %>
     <%
       entries = leaderboard.entries.respond_to?(:order) ? leaderboard.entries.order(total_seconds: :desc) : leaderboard.entries
-      
+
       top_entries = entries.first(3)
       user_entry = current_user ? entries.find { |entry| entry.user_id == current_user.id } : nil
       user_rank = user_entry ? entries.index(user_entry) : nil
-      
+
       if user_entry && user_rank && user_rank >= 3
         person_above = entries[user_rank - 1] if user_rank > 0
         person_below = entries[user_rank + 1] if user_rank < entries.length - 1
@@ -33,8 +33,8 @@
         </p>
         <div class="space-y-2">
           <% mini_leaderboard_entries.each_with_index do |entry, idx| %>
-            <% 
-              actual_rank = entries.index(entry) 
+            <%
+              actual_rank = entries.index(entry)
               is_separator_needed = show_user_separately && idx == 3 && actual_rank > 3
             %>
 
@@ -81,4 +81,4 @@
       </div>
     <% end %>
   <% end %>
-<% end %> 
+<% end %>

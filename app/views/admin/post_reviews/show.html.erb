@@ -203,11 +203,11 @@
           <% @unique_project_names.each do |project_name| %>
             <% is_selected = @selected_projects.include?(project_name) %>
             <% is_recommended = @recommended_project_names.include?(project_name) %>
-            <label class="project-filter-label <%= 'recommended' if is_recommended %>" 
+            <label class="project-filter-label <%= 'recommended' if is_recommended %>"
                    style="display: flex; align-items: center; background: <%= is_recommended ? '#1F2937' : '#374151' %>; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; border: 1px solid <%= is_recommended ? '#60A5FA' : 'transparent' %>;">
-              <input type="checkbox" 
-                     class="project-filter-checkbox" 
-                     data-project-name="<%= h(project_name) %>" 
+              <input type="checkbox"
+                     class="project-filter-checkbox"
+                     data-project-name="<%= h(project_name) %>"
                      <%= is_selected ? 'checked' : '' %>
                      style="margin-right: 0.5rem; accent-color: #60A5FA;">
               <%= h(project_name) %>
@@ -223,11 +223,11 @@
           <div class="extension-filters" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
             <% @unique_file_extensions.each do |extension| %>
               <% is_selected = @selected_extensions.include?(extension) %>
-              <label class="extension-filter-label" 
+              <label class="extension-filter-label"
                      style="display: flex; align-items: center; background: #374151; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer; border: 1px solid transparent;">
-                <input type="checkbox" 
-                       class="extension-filter-checkbox" 
-                       data-extension="<%= extension %>" 
+                <input type="checkbox"
+                       class="extension-filter-checkbox"
+                       data-extension="<%= extension %>"
                        <%= is_selected ? 'checked' : '' %>
                        style="margin-right: 0.5rem; accent-color: #60A5FA;">
                 <%= extension %>
@@ -306,7 +306,7 @@
 
                     span_top_px = top_offset_minutes * pixels_per_minute
                     span_height_px = [duration_minutes_on_day * pixels_per_minute, 2].max
-                    
+
                     projects_display = span[:projects_edited_details].map do |p_detail|
                       name = p_detail[:name].blank? ? "Unknown" : p_detail[:name].truncate(15)
                       p_detail[:repo_url] ? link_to(name, p_detail[:repo_url], target: "_blank", rel: "noopener noreferrer") : name
@@ -324,13 +324,13 @@
                     tooltip_parts << "Languages: #{span[:languages].join(', ')}" if span[:languages].any?
                     tooltip_parts << "Editors: #{span[:editors].join(', ')}" if span[:editors].any?
                     tooltip_parts << "Files: #{span[:files_edited].join(', ')}" if span[:files_edited].any?
-                %>
+                  %>
                   <div class="timeline-item coding-span"
                        style="top: <%= span_top_px %>px; height: <%= span_height_px %>px;"
                        data-projects="<%= project_names %>"
                        title="<%= tooltip_parts.join("\n") %>">
-                    <input type="checkbox" 
-                           class="span-selector-checkbox" 
+                    <input type="checkbox"
+                           class="span-selector-checkbox"
                            id="<%= span[:id] %>"
                            data-duration-seconds="<%= span[:duration] %>">
                     <div class="timeline-item-content">
@@ -351,11 +351,11 @@
                   commit_time_in_user_tz = commit.created_at.in_time_zone(@target_user_timezone)
                   top_offset_minutes = (commit_time_in_user_tz - day_start_in_user_tz) / 60.0
                   commit_top_px = top_offset_minutes * pixels_per_minute
-                  
+
                   commit_pill_height = 16
                   commit_top_px = [commit_top_px - (commit_pill_height / 2), last_commit_bottom_px].max
                   last_commit_bottom_px = commit_top_px + commit_pill_height + 1
-                  
+
                   additions = commit.github_raw.dig("stats", "additions") || 0
                   deletions = commit.github_raw.dig("stats", "deletions") || 0
                 %>
@@ -394,11 +394,11 @@ document.addEventListener('turbo:load', function() {
     timelineViewport.addEventListener('scroll', function() {
       dayHeaderStickyWrapper.style.transform = `translateX(-${timelineViewport.scrollLeft}px)`;
     });
-    
+
     const postStartDate = new Date('<%= @post_start_display.iso8601 %>');
     const reviewStartDate = new Date('<%= @review_start_date.iso8601 %>');
     const dayDiff = Math.floor((postStartDate - reviewStartDate) / (1000 * 60 * 60 * 24));
-    
+
     if (dayDiff >= 0 && dayDiff < <%= num_days_in_review %>) {
       const scrollAmount = dayDiff * <%= day_column_width_px %>;
       timelineViewport.scrollLeft = Math.max(0, scrollAmount - (<%= day_column_width_px %>/2) );
@@ -407,16 +407,16 @@ document.addEventListener('turbo:load', function() {
     daysContainer.addEventListener('mousemove', function(e) {
       const rect = daysContainer.getBoundingClientRect();
       const viewportRect = timelineViewport.getBoundingClientRect();
-      let mouseYInGrid = e.clientY - rect.top; 
+      let mouseYInGrid = e.clientY - rect.top;
       mouseYInGrid = Math.max(0, Math.min(mouseYInGrid, rect.height));
       cursorLine.style.top = `${mouseYInGrid}px`;
       cursorLine.style.display = 'block';
-      
+
       const minutesFromTimelineStart = mouseYInGrid / pixelsPerMinute;
       const totalMinutes = Math.floor(timelineStartHour * 60 + minutesFromTimelineStart);
       const displayHours = Math.floor(totalMinutes / 60) % 24;
       const displayMinutes = totalMinutes % 60;
-      
+
       cursorTimeDisplay.textContent = `${String(displayHours).padStart(2, '0')}:${String(displayMinutes).padStart(2, '0')}`;
       cursorTimeDisplay.style.top = `${mouseYInGrid + headerHeight}px`;
       cursorTimeDisplay.style.left = `5px`;

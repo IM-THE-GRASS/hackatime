@@ -39,7 +39,7 @@
   </div>
 
   <div id="filterable_dashboard_content">
-    <%= render partial: 'filterable_dashboard_content' %> 
+    <%= render partial: 'filterable_dashboard_content' %>
   </div>
 
   <script>
@@ -47,14 +47,14 @@
     window.initializeMultiSelect = window.initializeMultiSelect || function(selectId) {
       const select = document.getElementById(selectId);
       if (!select || select.dataset.initialized) return;
-      
+
       select.dataset.initialized = 'true';
       const header = select.querySelector('.select-header');
       const container = select.querySelector('.options-container');
       const checkboxes = select.querySelectorAll('input[type="checkbox"]');
       const clearButton = select.querySelector('.clear-button');
       const searchInput = select.querySelector('.search-input');
-      
+
       // Initialize clear button visibility
       const checkedBoxes = Array.from(checkboxes).filter(cb => cb.checked);
       if (checkedBoxes.length > 0 && clearButton) {
@@ -65,20 +65,20 @@
           header.textContent = `${checkedBoxes.length} selected`;
         }
       }
-      
+
       // Toggle dropdown
       header.addEventListener('click', function(e) {
         e.stopPropagation();
         const isVisible = container.style.display === 'block';
-        
+
         // Close all other dropdowns
         document.querySelectorAll('.options-container').forEach(c => {
           if (c !== container) c.style.display = 'none';
         });
-        
+
         // Toggle current dropdown
         container.style.display = isVisible ? 'none' : 'block';
-        
+
         // Focus search input when opening
         if (!isVisible && searchInput) {
           searchInput.focus();
@@ -100,7 +100,7 @@
           console.log('searchInput.addEventListener', e.target.value);
           const searchTerm = e.target.value.toLowerCase().trim();
           const options = select.querySelectorAll('.option');
-          
+
           options.forEach(option => {
             const text = option.querySelector('span').textContent.toLowerCase().trim();
             option.style.display = text.includes(searchTerm) ? '' : 'none';
@@ -130,11 +130,11 @@
       const frame = document.querySelector('#filterable_dashboard_content');
 
       frame.classList.add('loading');
-      
+
       const selected = Array.from(checkboxes)
         .filter(cb => cb.checked)
         .map(cb => cb.value);
-      
+
       // Update header text
       if (selected.length === 0) {
         header.textContent = `Filter by ${header.closest('.filter').querySelector('.filter-label').textContent.slice(2).toLowerCase()}...`;
@@ -163,7 +163,7 @@
 
       // Let Turbo handle the content update
       frame.src = contentUrl.toString();
-      
+
       // Track this request with a timestamp
       const requestTimestamp = Date.now();
       window.lastRequestTimestamp = requestTimestamp;
@@ -200,7 +200,7 @@
         });
       }
     });
-  </script> 
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" data-turbo-track="reload"></script>
 
@@ -212,7 +212,7 @@
         formatDuration(seconds) {
           const hours = Math.floor(seconds / 3600);
           const minutes = Math.floor((seconds % 3600) / 60);
-          
+
           if (hours > 0) {
             return `${hours}h ${minutes}m`;
           } else {
@@ -279,7 +279,7 @@
           if (!canvas) return;
 
           const weeklyStats = JSON.parse(canvas.dataset.stats);
-          
+
           const allProjects = new Set();
           Object.values(weeklyStats).forEach(weekData => {
             Object.keys(weekData).forEach(project => allProjects.add(project));
@@ -387,7 +387,7 @@
 
     if (!window.chartListenersInitialized) {
       window.chartListenersInitialized = true;
-      
+
       document.addEventListener('turbo:frame-load', () => {
         if (typeof Chart === 'undefined') {
           const checkChart = setInterval(() => {

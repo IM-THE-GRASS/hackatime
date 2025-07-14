@@ -174,7 +174,11 @@ class SessionsController < ApplicationController
       return
     end
 
-    user = User.find(params[:id])
+    user = User.find_by(id: params[:id])
+    unless user
+      redirect_to root_path, alert: "who?"
+      return
+    end
 
     if user.admin_level == "superadmin"
       redirect_to root_path, alert: "nice try, you cant do that"

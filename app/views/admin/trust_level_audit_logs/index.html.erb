@@ -11,23 +11,23 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <%= form.label :user_search, "user lookup", class: "block text-sm font-medium text-gray-300 mb-2" %>
-          <%= form.text_field :user_search, 
-              value: @user_search, 
-              placeholder: "just put anything here or something", 
+          <%= form.text_field :user_search,
+              value: @user_search,
+              placeholder: "just put anything here or something",
               class: "w-full px-3 py-2 bg-darkless rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
         </div>
-        
+
         <div>
           <%= form.label :admin_search, "admin lookup", class: "block text-sm font-medium text-gray-300 mb-2" %>
-          <%= form.text_field :admin_search, 
-              value: @admin_search, 
-              placeholder: "just put anything here or something", 
+          <%= form.text_field :admin_search,
+              value: @admin_search,
+              placeholder: "just put anything here or something",
               class: "w-full px-3 py-2 bg-darkless rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
         </div>
-        
+
         <div>
           <%= form.label :trust_level_filter, "filter by trust updates", class: "block text-sm font-medium text-gray-300 mb-2" %>
-          <%= form.select :trust_level_filter, 
+          <%= form.select :trust_level_filter,
               options_for_select([
                 ['All Changes', 'all'],
                 ['🔴 Set to Convicted', 'to_convicted'],
@@ -39,7 +39,7 @@
               { class: "w-full px-3 py-2 bg-darkless rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
         </div>
       </div>
-      
+
       <div class="flex items-center gap-4">
         <%= form.submit "run that shit", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors" %>
         <%= link_to "alt+f4", admin_trust_level_audit_logs_path, class: "bg-gray-600 hover:bg-darkless text-white px-4 py-2 rounded-md font-medium transition-colors" %>
@@ -65,8 +65,8 @@
             </p>
           <% end %>
         </div>
-        <%= link_to "fuckin abort", 
-            admin_trust_level_audit_logs_path, 
+        <%= link_to "fuckin abort",
+            admin_trust_level_audit_logs_path,
             class: "text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded" %>
       </div>
     </div>
@@ -121,14 +121,14 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <span class="text-sm text-gray-300">
-                    <% 
+                    <%
                       previous_emoji = case log.previous_trust_level
                       when "blue" then "🔵"
                       when "red" then "🔴"
                       when "green" then "🟢"
                       when "yellow" then "🟡"
                       end
-                      
+
                       new_emoji = case log.new_trust_level
                       when "blue" then "🔵"
                       when "red" then "🔴"
@@ -177,8 +177,8 @@
                 <% end %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <%= link_to "the deets", 
-                    admin_trust_level_audit_log_path(log), 
+                <%= link_to "the deets",
+                    admin_trust_level_audit_log_path(log),
                     class: "text-blue-400 hover:text-blue-300" %>
               </td>
             </tr>
@@ -186,7 +186,7 @@
         </tbody>
       </table>
     </div>
-    
+
     <% if @audit_logs.empty? %>
       <div class="text-center py-12">
         <div class="text-gray-400 text-lg mb-2">theres nothin</div>

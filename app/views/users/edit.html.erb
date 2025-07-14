@@ -19,7 +19,7 @@
         <h2 class="text-xl font-semibold text-white">Time Tracking Wizard</h2>
       </div>
       <p class="text-gray-300 mb-4">Get started with tracking your coding time in just a few minutes.</p>
-      <%= link_to "Set up time tracking", my_wakatime_setup_path, 
+      <%= link_to "Set up time tracking", my_wakatime_setup_path,
           class: "inline-flex items-center gap-2 px-4 py-2 bg-primary text-white font-medium rounded transition-colors duration-200" %>
     </div>
 
@@ -36,7 +36,7 @@
         class: "space-y-4" do |f| %>
         <div>
           <%= f.label :timezone, "Your timezone", class: "block text-sm font-medium text-gray-200 mb-2" %>
-          <%= f.select :timezone, 
+          <%= f.select :timezone,
               TZInfo::Timezone.all.map(&:identifier).sort,
               { include_blank: @user.timezone.blank? },
               { class: "w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-primary focus:ring-1 focus:ring-primary" } %>
@@ -75,22 +75,22 @@
         </div>
         <h2 class="text-xl font-semibold text-white" id="user_slack_status">Slack Integration</h2>
       </div>
-      
+
       <div class="space-y-4">
         <div>
           <h3 class="text-lg font-medium text-white mb-2">Status Updates</h3>
           <p class="text-gray-300 text-sm mb-3">When you're hacking on a project, Hackatime can update your Slack status so you can show it off!</p>
           <% unless @can_enable_slack_status %>
-            <%= link_to "Re-authorize with Slack", slack_auth_path, 
+            <%= link_to "Re-authorize with Slack", slack_auth_path,
                 class: "inline-flex items-center gap-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 text-sm font-medium rounded transition-colors duration-200 mb-3" %>
           <% end %>
           <%= form_with model: @user,
             url: @is_own_settings ? my_settings_path : settings_user_path(@user),
             method: :patch, local: false do |f| %>
             <div class="flex items-center gap-3">
-              <%= f.check_box :uses_slack_status, 
+              <%= f.check_box :uses_slack_status,
                   class: "w-4 h-4 text-primary border-gray-600 rounded focus:ring-primary bg-gray-800" %>
-              <%= f.label :uses_slack_status, "Update my Slack status automatically", 
+              <%= f.label :uses_slack_status, "Update my Slack status automatically",
                   class: "text-sm text-gray-200" %>
             </div>
             <%= f.submit "Save", class: "mt-3 px-4 py-2 bg-primary text-white font-medium rounded transition-colors duration-200" %>
@@ -130,9 +130,9 @@
         method: :patch, local: false,
         class: "space-y-4" do |f| %>
         <div class="flex items-center gap-3">
-          <%= f.check_box :allow_public_stats_lookup, 
+          <%= f.check_box :allow_public_stats_lookup,
               class: "w-4 h-4 text-primary border-gray-600 rounded focus:ring-primary bg-gray-800" %>
-          <%= f.label :allow_public_stats_lookup, "Allow public stats lookup", 
+          <%= f.label :allow_public_stats_lookup, "Allow public stats lookup",
               class: "text-sm text-gray-200" %>
         </div>
         <p class="text-xs text-gray-400">When enabled, others can view your coding statistics through public APIs.</p>
@@ -158,7 +158,7 @@
         </div>
         <h2 class="text-xl font-semibold text-white" id="user_github_account">Connected Accounts</h2>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-white">GitHub Account</h3>
@@ -168,12 +168,9 @@
               <span class="text-green-400">✅</span>
               <span class="text-gray-200 text-sm">Connected: <%= link_to "@#{h(@user.github_username)}", "https://github.com/#{h(@user.github_username)}", target: "_blank", class: "text-primary hover:text-primary/80 underline" %></span>
             </div>
-            <% unless @user.github_access_token.present? %>
-              <%= link_to "Relink GitHub Account", github_auth_path, data: { turbo: "false" }, 
-                  class: "inline-flex items-center gap-2 px-3 py-2 bg-primary text-white text-sm font-medium rounded transition-colors duration-200" %>
-            <% end %>
+            <%= link_to "Relink GitHub Account", github_auth_path, data: { turbo: "false" }, class: "inline-flex items-center gap-2 px-3 py-2 bg-primary text-white text-sm font-medium rounded transition-colors duration-200" %>
           <% else %>
-            <%= link_to "Link GitHub Account", github_auth_path, data: { turbo: "false" }, 
+            <%= link_to "Link GitHub Account", github_auth_path, data: { turbo: "false" },
                 class: "inline-flex items-center gap-2 px-4 py-2 bg-primary text-white font-medium rounded transition-colors duration-200" %>
           <% end %>
         </div>
@@ -196,8 +193,8 @@
             <p class="text-gray-400 text-sm">No email addresses found.</p>
           <% end %>
           <%= form_tag add_email_auth_path, data: { turbo: false }, class: "space-y-2" do %>
-            <%= email_field_tag :email, nil, 
-                placeholder: "Add another email address", 
+            <%= email_field_tag :email, nil,
+                placeholder: "Add another email address",
                 required: true,
                 class: "w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm" %>
             <%= submit_tag "Add Email", class: "w-full px-3 py-2 bg-primary hover:bg-primary/80 text-white text-sm font-medium rounded transition-colors duration-200" %>
@@ -213,23 +210,23 @@
         </div>
         <h2 class="text-xl font-semibold text-white" id="user_stats_badges">Stats Badges</h2>
       </div>
-      
+
       <div class="space-y-6">
         <div>
           <h3 class="text-lg font-medium text-white mb-2">General Stats Badge</h3>
           <p class="text-gray-300 text-sm mb-4">Show your coding stats on your GitHub profile with beautiful badges.</p>
-          
+
           <div class="space-y-3">
             <div>
               <label class="block text-sm font-medium text-gray-200 mb-2">Theme</label>
-              <select name="theme" id="theme-select" onchange="up1(this.value)" 
+              <select name="theme" id="theme-select" onchange="up1(this.value)"
                       class="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-primary focus:ring-1 focus:ring-primary">
                 <% GithubReadmeStats.themes.each do |theme| %>
                   <option value="<%= theme %>"><%= theme.humanize %></option>
                 <% end %>
               </select>
             </div>
-            
+
             <% gh_badge = GithubReadmeStats.new(current_user.id, "darcula") %>
             <div class="p-4 bg-gray-800 border border-gray-600 rounded">
               <img id="badge-preview" src="<%= gh_badge.generate_badge_url %>" data-url="<%= gh_badge.generate_badge_url %>" class="mb-3 rounded">
@@ -267,7 +264,7 @@
           preview.src = newUrl;
           url.textContent = newUrl;
         }
-        
+
         function up2(project) {
           const preview = document.getElementById('project-badge-preview');
           const url = document.getElementById('project-badge-url');
@@ -288,7 +285,7 @@
           <h2 class="text-xl font-semibold text-white" id="user_config_file">Config File</h2>
         </div>
         <p class="text-gray-300 text-sm mb-4">Your Wakatime configuration file for tracking coding time.</p>
-        
+
         <div class="bg-gray-800 border border-gray-600 rounded p-4 overflow-x-auto">
           <%= render "wakatime_config_display" %>
         </div>
@@ -305,10 +302,10 @@
           <h2 class="text-xl font-semibold text-white" id="user_migration_assistant">Migration Assistant</h2>
         </div>
         <p class="text-gray-300 text-sm mb-4">This will migrate your heartbeats from waka.hackclub.com to this platform.</p>
-        
-        <%= button_to "Migrate heartbeats", my_settings_migrate_heartbeats_path, method: :post, 
+
+        <%= button_to "Migrate heartbeats", my_settings_migrate_heartbeats_path, method: :post,
             class: "w-full px-4 py-2 bg-primary text-white font-medium rounded transition-colors duration-200" %>
-        
+
         <% if @heartbeats_migration_jobs.any? %>
           <div class="mt-4 space-y-2">
             <h3 class="text-sm font-medium text-white">Migration Status</h3>
@@ -330,7 +327,7 @@
         <h2 class="text-xl font-semibold text-white" id="user_markscribe">Markscribe Templates</h2>
       </div>
       <p class="text-gray-300 text-sm mb-4">Use markscribe to create beautiful GitHub profile READMEs with your coding stats.</p>
-      
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <div class="p-4 bg-gray-800 border border-gray-600 rounded mb-4 overflow-x-auto">
@@ -340,9 +337,9 @@
           <p class="text-xs text-gray-400">See the <a href="https://github.com/taciturnaxolotl/markscribe#your-wakatime-languages-formated-as-a-bar" target="_blank" class="text-primary hover:text-primary/80 underline">markscribe documentation</a> for more template options.</p>
         </div>
         <div>
-          <img src="https://cdn.fluff.pw/slackcdn/524e293aa09bc5f9115c0c29c18fb4bc.png" 
-               alt="Example of markscribe output showing coding language and project statistics" 
-               class="w-full rounded border border-gray-600"/>
+          <img src="https://cdn.fluff.pw/slackcdn/524e293aa09bc5f9115c0c29c18fb4bc.png"
+               alt="Example of markscribe output showing coding language and project statistics"
+               class="w-full rounded border border-gray-600">
         </div>
       </div>
     </div>
@@ -355,7 +352,7 @@
           </div>
           <h2 class="text-xl font-semibold text-white">WakaTime Mirrors</h2>
         </div>
-        
+
         <% if current_user.wakatime_mirrors.any? %>
           <% grid_cols = current_user.wakatime_mirrors.size > 1 ? "md:grid-cols-2" : "" %>
           <div class="grid grid-cols-1 <%= grid_cols %> gap-4 mb-4">

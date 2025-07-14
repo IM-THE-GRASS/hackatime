@@ -14,12 +14,12 @@
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 bg-green rounded-full flex items-center justify-center">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
           </div>
           <h2 class="text-xl font-bold text-green">Address on File</h2>
         </div>
-        
+
         <div class="bg-darkless rounded-lg p-6 border-l-4 border-primary">
           <div class="space-y-2 text-lg">
             <p class="font-semibold text-white">
@@ -49,9 +49,9 @@
     <% end %>
 
     <div class="flex justify-center">
-      <%= link_to @user.mailing_address.present? ? "Update this address" : "Add your address", 
-        edit_my_mailing_address_path, 
+      <%= link_to @user.mailing_address.present? ? "Update this address" : "Add your address",
+        edit_my_mailing_address_path,
         class: "bg-primary hover:bg-red text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors inline-flex items-center gap-2" %>
     </div>
   </div>
-</div> 
+</div>

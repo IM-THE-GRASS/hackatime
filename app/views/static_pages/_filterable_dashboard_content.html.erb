@@ -4,7 +4,7 @@
       <div class="stat-label">TOTAL TIME</div>
       <div class="stat-value" data-stat="total_time"><%= ApplicationController.helpers.short_time_simple(@total_time) %></div>
     </div>
-    
+
     <% dev_tool do %>
       <div class="stat-card">
         <div class="stat-label">TOTAL HEARTBEATS</div>
@@ -13,7 +13,7 @@
         </div>
       </div>
     <% end %>
-    
+
     <div class="stat-card">
       <div class="stat-label">TOP PROJECT</div>
       <div class="stat-value" data-stat="top_project">
@@ -23,7 +23,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div class="stat-card">
       <div class="stat-label">TOP LANGUAGE</div>
       <div class="stat-value" data-stat="top_language">
@@ -33,7 +33,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div class="stat-card">
       <div class="stat-label">TOP OS</div>
       <div class="stat-value" data-stat="top_operating_system">
@@ -43,7 +43,7 @@
         <% end %>
       </div>
     </div>
-    
+
     <div class="stat-card">
       <div class="stat-label">TOP EDITOR</div>
       <div class="stat-value" data-stat="top_editor">
@@ -60,7 +60,7 @@
     <div class="card">
       <h2>Project Durations</h2>
       <div class="bar-graph">
-        <% 
+        <%
           max_duration = @project_durations.values.max
           min_duration = @project_durations.values.min
 
@@ -70,20 +70,20 @@
             return 0 if value == 0
             min_percent = 5  # Minimum bar width percentage
             max_percent = 100 # Maximum bar width percentage
-            
+
             # Mix linear and logarithmic scaling
             # 80% linear, 20% logarithmic
             linear_ratio = value.to_f / max_val
             log_ratio = Math.log(value + 1) / Math.log(max_val + 1)
-            
+
             linear_weight = 0.8
             log_weight = 0.2
-            
+
             scaled = min_percent + (linear_weight * linear_ratio + log_weight * log_ratio) * (max_percent - min_percent)
             [scaled, max_percent].min.round
           end
         %>
-        
+
         <% @project_durations.each do |project, duration| %>
           <div class="bar-row">
             <div class="bar-label"><%= h(project.presence || "Unknown") %></div>

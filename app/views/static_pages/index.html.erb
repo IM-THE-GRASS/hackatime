@@ -2,7 +2,7 @@
   <% if current_user&.trust_level == "red" %>
     <div class="text-primary bg-red-500/10 border-2 border-red-500/20 p-4 text-center rounded-lg mb-4">
       <div class="flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M8 14.5a6.5 6.5 0 1 0 0-13a6.5 6.5 0 0 0 0 13M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m1-5a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-.25-6.25a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 1.5 0z" clip-rule="evenodd"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M8 14.5a6.5 6.5 0 1 0 0-13a6.5 6.5 0 0 0 0 13M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m1-5a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-.25-6.25a.75.75 0 0 0-1.5 0v3.5a.75.75 0 0 0 1.5 0z" clip-rule="evenodd" /></svg>
         <span class="text-3xl font-bold block ml-2">Hold up! Your account has been banned for suspicious activity.</span>
       </div>
       <div>
@@ -71,7 +71,7 @@
                     <%= h(user[:display_name]) %>
                     <div class="absolute top-full left-1/2 -ml-1 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-800"></div>
                   </div>
-                  <img src="<%= user[:avatar_url] %>" alt="<%= h(user[:display_name]) %>" class="w-10 h-10 rounded-full border-2 border-primary object-cover shadow-sm" />
+                  <img src="<%= user[:avatar_url] %>" alt="<%= h(user[:display_name]) %>" class="w-10 h-10 rounded-full border-2 border-primary object-cover shadow-sm">
                 </div>
               <% end %>
               <% if @ssp_users_size && @ssp_users_size > 5 %>
@@ -82,7 +82,7 @@
                     <div class="flex flex-col gap-2">
                       <% @ssp_users_recent.each do |user| %>
                         <div class="flex items-center p-1 rounded hover:bg-gray-700 transition-colors duration-200">
-                          <img src="<%= user[:avatar_url] %>" alt="<%= h(user[:display_name]) %>" class="w-8 h-8 rounded-full mr-2 border border-primary" />
+                          <img src="<%= user[:avatar_url] %>" alt="<%= h(user[:display_name]) %>" class="w-8 h-8 rounded-full mr-2 border border-primary">
                           <span class="font-medium text-sm"><%= h(user[:display_name]) %></span>
                         </div>
                       <% end %>
@@ -171,4 +171,4 @@
       </div>
     </div>
   <% end %>
-</div> 
+</div>

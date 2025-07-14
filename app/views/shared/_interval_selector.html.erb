@@ -30,25 +30,25 @@
     // Common function to update URL parameters and refresh the frame
     function updateWithParams(params) {
       const url = new URL(window.location.href);
-      
+
       // Clear existing parameters
       url.searchParams.delete('interval');
       url.searchParams.delete('from');
       url.searchParams.delete('to');
-      
+
       // Add new parameters
       Object.entries(params).forEach(([key, value]) => {
         if (value) url.searchParams.set(key, value);
       });
-      
+
       updateProjectsFrame(url.toString());
     }
-    
+
     function updateProjectsFrame(url) {
       let baseUrl = '<%= project_durations_static_pages_path %>';
       const params = new URLSearchParams(new URL(url).search);
       const frameUrl = baseUrl + '?' + params.toString();
-      
+
       const frame = document.getElementById('project_durations');
       if (frame) {
         console.log('Updating frame with URL:', frameUrl);
@@ -78,11 +78,11 @@
       document.getElementById('interval-dropdown-menu').style.display = 'none';
       updateWithParams({ interval });
     }
-    
+
     function applyCustomRange() {
       const start = document.getElementById('custom-start').value;
       const end = document.getElementById('custom-end').value;
-      
+
       if (start || end) {
         let label = 'Custom Range';
         if (start && end) {
@@ -92,19 +92,19 @@
         } else if (end) {
           label = `Until ${end}`;
         }
-        
+
         updateDropdownLabel(label);
         document.getElementById('interval-dropdown-menu').style.display = 'none';
         updateWithParams({ interval: 'custom', from: start, to: end });
       }
     }
-    
+
     function toggleIntervalDropdown() {
       const menu = document.getElementById('interval-dropdown-menu');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
       document.addEventListener('mousedown', closeDropdownOnClickOutside);
     }
-    
+
     function closeDropdownOnClickOutside(e) {
       const menu = document.getElementById('interval-dropdown-menu');
       const trigger = document.querySelector('.interval-dropdown-trigger');
@@ -127,9 +127,9 @@
       color: white;
       cursor: pointer;
     }
-    
+
     .interval-custom-range .primary-button:hover {
       filter: brightness(1.1);
     }
   </style>
-<% end %> 
+<% end %>

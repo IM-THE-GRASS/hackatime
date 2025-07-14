@@ -31,7 +31,7 @@
       <strong>App:</strong> <%= @app.airtable_fields["Name"] %>
     </p>
     <p style="margin-bottom: 0.5rem; color: #A0AEC0; line-height: 1.5;">
-      <strong>Airtable Link:</strong> 
+      <strong>Airtable Link:</strong>
       <%= link_to "View on Airtable", @submission.airtable_url, target: "_blank", style: "color: #60A5FA; text-decoration: none;" %>
     </p>
   </section>
@@ -60,7 +60,7 @@
               </div>
             </div>
             <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-              <%= link_to "View Post Review", admin_post_review_path(post.airtable_id), 
+              <%= link_to "View Post Review", admin_post_review_path(post.airtable_id),
                   style: "display: inline-block; padding: 0.4rem 0.8rem; background-color: #3B82F6; color: white; text-decoration: none; border-radius: 0.25rem; font-size: 0.85rem;" %>
               <%= link_to "View on Airtable", post.airtable_url, target: "_blank",
                   style: "display: inline-block; padding: 0.4rem 0.8rem; background-color: #374151; color: #E5E7EB; text-decoration: none; border-radius: 0.25rem; font-size: 0.85rem;" %>
@@ -72,4 +72,4 @@
       <p style="color: #A0AEC0;">No posts found for this submission.</p>
     <% end %>
   </section>
-</div> 
+</div>

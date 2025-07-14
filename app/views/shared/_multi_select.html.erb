@@ -12,11 +12,10 @@
       <div class="options-list">
         <% values.reject(&:blank?).each do |value| %>
           <label class="option">
-            <input 
-              type="checkbox" 
-              value="<%= value %>" 
-              <%= 'checked' if selected&.include?(value) %>
-            >
+            <input
+              type="checkbox"
+              value="<%= value %>"
+              <%= 'checked' if selected&.include?(value) %>>
             <span><%= value %></span>
           </label>
         <% end %>

@@ -40,18 +40,17 @@
 </style>
 
 <div class=" text-white flex flex-col font-sans min-h-screen">
-  <div 
+  <div
     data-controller="admin-timeline-user-selector"
     data-admin-timeline-user-selector-current-user-json-value='<%= current_admin_user_json %>'
     data-admin-timeline-user-selector-initial-selected-users-json-value='<%= initial_selected_users_json %>'
     data-admin-timeline-user-selector-search-url-value="<%= admin_timeline_search_users_path %>"
     data-admin-timeline-user-selector-leaderboard-users-url-value="<%= admin_timeline_leaderboard_users_path %>"
-    class="mb-4 p-3 bg-dark rounded-md flex-shrink-0"
-  >
+    class="mb-4 p-3 bg-dark rounded-md flex-shrink-0">
     <form id="timeline-filter-form" action="<%= admin_timeline_path %>" method="get" data-turbo-frame="_top">
       <input type="hidden" name="user_ids" data-admin-timeline-user-selector-target="userIdsInput">
       <input type="hidden" name="date" value="<%= current_date_for_form %>" data-admin-timeline-user-selector-target="dateInput">
-      
+
       <div class="flex items-center gap-3">
         <div class="flex-1 relative">
           <div class="relative">
@@ -72,29 +71,29 @@
                   autocomplete="off"
                   class="w-full pl-10 pr-3 py-2 bg-darker rounded-md text-white placeholder-gray-300 focus:outline-none focus:border-transparent text-sm">
           </div>
-          <div class="absolute top-full left-0 w-full bg-dark border border-gray-700 rounded-lg mt-1 z-50 max-h-48 overflow-y-auto hidden shadow-lg" 
+          <div class="absolute top-full left-0 w-full bg-dark border border-gray-700 rounded-lg mt-1 z-50 max-h-48 overflow-y-auto hidden shadow-lg"
               data-admin-timeline-user-selector-target="searchResults">
             <%# Search results will appear here %>
           </div>
         </div>
-        <button type="button" 
-                class="px-3 py-2 bg-darker rounded-md text-sm text-white transition-colors" 
-                data-action="admin-timeline-user-selector#applyPreset" 
+        <button type="button"
+                class="px-3 py-2 bg-darker rounded-md text-sm text-white transition-colors"
+                data-action="admin-timeline-user-selector#applyPreset"
                 data-period="today">
           Top 15 Today
         </button>
-        <button type="button" 
-                class="px-3 py-2 bg-darker rounded-md text-sm text-white transition-colors" 
-                data-action="admin-timeline-user-selector#applyPreset" 
+        <button type="button"
+                class="px-3 py-2 bg-darker rounded-md text-sm text-white transition-colors"
+                data-action="admin-timeline-user-selector#applyPreset"
                 data-period="last_7_days">
           Top 15 Week
         </button>
-        <button type="submit" 
+        <button type="submit"
                 class="px-4 py-2 bg-green-600 rounded-md text-sm text-white transition-colors font-medium">
           View
         </button>
       </div>
-      
+
       <div class="mt-2 min-h-7" data-admin-timeline-user-selector-target="selectedUsersContainer">
         <%# Selected user pills will appear here %>
       </div>
@@ -106,14 +105,14 @@
       <%= @date.in_time_zone(primary_user_tz).strftime("%A, %B %-d, %Y") %>
     </div>
     <div class="flex gap-2">
-      <%= link_to "← Prev", admin_timeline_path(date: @prev_date.to_s), 
-          class: "px-3 py-1 bg-darker rounded text-sm transition-colors", 
+      <%= link_to "← Prev", admin_timeline_path(date: @prev_date.to_s),
+          class: "px-3 py-1 bg-darker rounded text-sm transition-colors",
           data: { "date-nav-link": "true" } %>
-      <%= link_to "Today", admin_timeline_path(date: Time.current.to_date.to_s), 
-          class: "px-3 py-1 bg-darker rounded text-sm transition-colors", 
+      <%= link_to "Today", admin_timeline_path(date: Time.current.to_date.to_s),
+          class: "px-3 py-1 bg-darker rounded text-sm transition-colors",
           data: { "date-nav-link": "true" } %>
-      <%= link_to "Next →", admin_timeline_path(date: @next_date.to_s), 
-          class: "px-3 py-1 bg-darker rounded text-sm transition-colors", 
+      <%= link_to "Next →", admin_timeline_path(date: @next_date.to_s),
+          class: "px-3 py-1 bg-darker rounded text-sm transition-colors",
           data: { "date-nav-link": "true" } %>
     </div>
   </div>
@@ -125,33 +124,33 @@
         grid_width = hour_label_width + (users_data_array.count * (min_column_width_px + gutter_px))
         grid_height = 120 + (24 * pixels_per_hour)
       %>
-      
+
       <div class="relative" style="width: <%= grid_width %>px; height: <%= grid_height %>px;">
         <% (0..23).each do |hour| %>
-          <% 
+          <%
             hour_top = 120 + (hour * pixels_per_hour)
             formatted_hour = Time.utc(2000,1,1, hour).strftime("%-l:00 %p")
           %>
-          <div class="absolute left-0 w-full border-t border-gray-600" 
+          <div class="absolute left-0 w-full border-t border-gray-600"
                style="top: <%= hour_top %>px; height: <%= pixels_per_hour %>px;">
             <div class="absolute left-2 top-2 text-xs text-gray-300 font-mono px-1">
               <%= formatted_hour %>
             </div>
           </div>
         <% end %>
-        
+
         <% users_data_array.each_with_index do |data, index| %>
-          <% 
-            user = data[:user] 
+          <%
+            user = data[:user]
             total_coded_time_seconds = data[:total_coded_time]
             column_left = hour_label_width + (index * (min_column_width_px + gutter_px))
             trust_level_emoji = case user.respond_to?(:trust_level) ? user.trust_level : nil
               when "red" then "🔴"
-              when "green" then "🟢" 
+              when "green" then "🟢"
               when "yellow" then "🟡"
               else "🔵"
             end
-            
+
             trust_level_bg = case user.respond_to?(:trust_level) ? user.trust_level : nil
               when "red" then "bg-red-500/20"
               when "green" then "bg-green-500/20"
@@ -160,7 +159,7 @@
               else "bg-gray-500/20"
             end
           %>
-          <div class="absolute border-r border-gray-700" 
+          <div class="absolute border-r border-gray-700"
                style="left: <%= column_left %>px; width: <%= min_column_width_px %>px; top: 120px; bottom: 0; padding-bottom: 0;">
           </div>
           <div class="absolute top-0 p-3 rounded-lg shadow-lg <%= trust_level_bg %>"
@@ -173,15 +172,15 @@
             <div class="flex justify-center items-center gap-4 mb-1 text-center">
               <% if current_user && user != current_user && user.slack_uid.present? %>
               <div>
-                <%= link_to "Slack", "slack://user?team=T0266FRGM&id=#{user.slack_uid}", 
-                target: "_blank", 
+                <%= link_to "Slack", "slack://user?team=T0266FRGM&id=#{user.slack_uid}",
+                target: "_blank",
                 class: "text-xs text-blue-400 hover:text-blue-300 underline" %>
               </div>
               <% end %>
               <% if user.respond_to?(:github_profile_url) && user.github_profile_url.present? %>
               <div>
-                <%= link_to "Git", user.github_profile_url, 
-                target: "_blank", 
+                <%= link_to "Git", user.github_profile_url,
+                target: "_blank",
                 class: "text-xs text-green-400 hover:text-green-300 underline" %>
               </div>
               <% end %>
@@ -190,7 +189,7 @@
               </div>
               <% if current_user && current_user.admin_level.in?(["admin", "superadmin"]) && user != current_user %>
               <div>
-                <button onclick="setTrust(<%= user.id %>)" 
+                <button onclick="setTrust(<%= user.id %>)"
                   class="text-xs text-gray-300 hover:text-white"
                   title="Set trust level">🔨</button>
               </div>
@@ -199,13 +198,13 @@
             <div class="text-sm font-medium mb-1 <%= total_coded_time_seconds && total_coded_time_seconds > 0 ? 'text-green-300' : 'text-gray-400' %>">
               <%= total_coded_time_seconds && total_coded_time_seconds > 0 ? "#{short_time_simple(total_coded_time_seconds)} coded" : "No time coded" %>
             </div>
-            
+
             <div class="text-xs text-gray-300">
               <%= user.timezone %>
             </div>
           </div>
         <% end %>
-        
+
         <%
           current_time_in_zone = Time.current.in_time_zone(primary_user_tz)
           is_today = @date == Time.current.in_time_zone(primary_user_tz).to_date
@@ -217,7 +216,7 @@
           end
         %>
         <% if show_current_time_line %>
-          <div class="absolute w-full h-0.5 bg-red-500 z-300 flex items-center" 
+          <div class="absolute w-full h-0.5 bg-red-500 z-300 flex items-center"
                style="left: <%= hour_label_width %>px; right: 0; top: <%= current_time_line_top_px %>px;">
             <div class="bg-red-500 text-white text-xs px-2 py-1 rounded -ml-16">NOW</div>
           </div>
@@ -266,7 +265,7 @@
             }
           end
         %>
-        
+
         <% users_data_array.each_with_index do |data, index| %>
           <%
             user = data[:user]
@@ -278,7 +277,7 @@
             <% props = calculate_span_properties.call(span_data, user.timezone || primary_user_tz) %>
             <% next unless props %>
             <div class="absolute rounded-md p-2 text-white text-xs overflow-hidden z-10"
-                 style="background-color: <%= block_color %>; 
+                 style="background-color: <%= block_color %>;
                         left: <%= column_left + 2 %>px;
                         width: <%= min_column_width_px - 4 %>px;
                         top: <%= props[:final_top_px] %>px;
@@ -288,8 +287,8 @@
                 <% if props[:projects_to_display]&.any? %>
                   <% props[:projects_to_display].each_with_index do |project_detail, p_idx| %>
                     <% if project_detail[:repo_url].present? %>
-                      <a href="<%= project_detail[:repo_url] %>" target="_blank" rel="noopener noreferrer" 
-                         class="text-white hover:text-gray-200 underline" 
+                      <a href="<%= project_detail[:repo_url] %>" target="_blank" rel="noopener noreferrer"
+                         class="text-white hover:text-gray-200 underline"
                          title="Open <%= h(project_detail[:name]) %> on GitHub"><%= h(project_detail[:name]).truncate(20) %></a>
                     <% else %>
                       <span title="<%= h(project_detail[:name]) %> - No GitHub Repo Mapped"><%= h(project_detail[:name]).truncate(20) %> 🚫</span>
@@ -341,7 +340,7 @@
       </div>
     <% end %>
   </div>
-  
+
 </div>
 
 <script>
@@ -404,7 +403,7 @@ window.setTrust = function(userId) {
       'Content-Type': 'application/json',
       'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       trust_level: levelForAPI,
       reason: reason.trim(),
       notes: notes ? notes.trim() : ''
@@ -432,7 +431,7 @@ window.setTrust = function(userId) {
         span.textContent = trust.emoji;
       }
     }
-    
+
     alert(`set trust to ${trust.name}\nreason: ${reason}${notes ? '\nanything else? ' + notes : ''}`);
   })
   .catch(error => {

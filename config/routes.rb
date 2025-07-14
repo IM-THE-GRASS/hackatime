@@ -20,10 +20,8 @@ Rails.application.routes.draw do
     mount AhoyCaptain::Engine => "/ahoy_captain"
     mount Flipper::UI.app(Flipper) => "flipper", as: :flipper
 
-    get "/impersonate/:id", to: "sessions#impersonate", as: :impersonate_user
     get "/my/mailing_address", to: "my/mailing_address#show", as: :my_mailing_address
   end
-  get "/stop_impersonating", to: "sessions#stop_impersonating", as: :stop_impersonating
 
   constraints AdminLevelConstraint.new(:superadmin, :admin, :viewer) do
     namespace :admin do
@@ -40,7 +38,9 @@ Rails.application.routes.draw do
       resources :trust_level_audit_logs, only: [ :index, :show ]
       resources :admin_api_keys, except: [ :edit, :update ]
     end
+    get "/impersonate/:id", to: "sessions#impersonate", as: :impersonate_user
   end
+  get "/stop_impersonating", to: "sessions#stop_impersonating", as: :stop_impersonating
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
@@ -107,7 +107,7 @@ Rails.application.routes.draw do
   post "my/settings/migrate_heartbeats", to: "users#migrate_heartbeats", as: :my_settings_migrate_heartbeats
 
   namespace :my do
-    resources :project_repo_mappings, param: :project_name, only: [ :edit, :update ]
+  resources :project_repo_mappings, param: :project_name, only: [ :edit, :update ], constraints: { project_name: /.+/ }
     resource :mailing_address, only: [ :show, :edit ]
     get "mailroom", to: "mailroom#index"
   end
@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       get "users/:username/trust_factor", to: "stats#trust_factor"
       get "users/:username/projects", to: "stats#user_projects"
       get "users/:username/project/:project_name", to: "stats#user_project"
+      get "users/:username/projects/details", to: "stats#user_projects_details"
 
       get "users/lookup_email/:email", to: "users#lookup_email", constraints: { email: /[^\/]+/ }
       get "users/lookup_slack_uid/:slack_uid", to: "users#lookup_slack_uid"

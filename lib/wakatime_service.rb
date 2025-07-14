@@ -5,11 +5,14 @@ class WakatimeService
     @scope = scope || Heartbeat.all
     @user = user
 
-    # Default to 1 year ago if no start_date provided or if no data exists
-    @start_date = start_date || @scope.minimum(:time) || 1.year.ago.to_i
-    @end_date = end_date || @scope.maximum(:time) || Time.current.to_i
+    @start_date = convert_to_unix_timestamp(start_date)
+    @end_date = convert_to_unix_timestamp(end_date)
 
-    @scope = @scope.where(time: @start_date..@end_date)
+    # Default to 1 year ago if no start_date provided or if no data exists
+    @start_date = @start_date || @scope.minimum(:time) || 1.year.ago.to_i
+    @end_date = @end_date || @scope.maximum(:time) || Time.current.to_i
+
+    @scope = @scope.where("time >= ? AND time < ?", @start_date, @end_date)
 
     @limit = limit
     @limit = nil if @limit&.zero?
@@ -29,8 +32,8 @@ class WakatimeService
     summary[:is_other_usage_visible] = true if @user.present?
     summary[:status] = "ok"
 
-    @start_time = @scope.minimum(:time) || @start_date
-    @end_time = @scope.maximum(:time) || @end_date
+    @start_time = @start_date
+    @end_time = @end_date
 
     summary[:start] = Time.at(@start_time).strftime("%Y-%m-%dT%H:%M:%SZ")
     summary[:end] = Time.at(@end_time).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -123,5 +126,26 @@ class WakatimeService
     when "KTextEditor" then "Kate"
     else editor.capitalize
     end
+  end
+
+  private
+
+  def convert_to_unix_timestamp(timestamp)
+    # our lord and savior stack overflow for this bit of code
+    return nil if timestamp.nil?
+
+    case timestamp
+    when String
+      Time.parse(timestamp).to_i
+    when Time, DateTime, Date
+      timestamp.to_i
+    when Numeric
+      timestamp.to_i
+    else
+      nil
+    end
+  rescue ArgumentError => e
+    Rails.logger.error("Error converting timestamp: #{e.message}")
+    nil
   end
 end

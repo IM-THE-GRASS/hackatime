@@ -49,7 +49,7 @@
         <div class="rounded-lg mb-6">
           <iframe width="100%" height="300" src="https://www.youtube.com/embed/QTwhJy7nT_w?loop=1&playlist=QTwhJy7nT_w&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded"></iframe>
         </div>
-        
+
         <div class="flex gap-4 flex-wrap">
           <button id="show-windows-button" class="bg-blue hover:bg-cyan text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('windows')">Using Windows?</button>
           <button id="show-advanced-button-from-mac" class="bg-purple hover:bg-darkless text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('advanced')">Custom Setup</button>
@@ -71,7 +71,7 @@
         <div class="rounded-lg mb-6">
           <iframe width="100%" height="300" src="https://www.youtube.com/embed/fX9tsiRvzhg?loop=1&playlist=fX9tsiRvzhg&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded"></iframe>
         </div>
-        
+
         <div class="flex gap-4 flex-wrap">
           <button id="show-mac-linux-button" class="bg-green hover:bg-cyan text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('mac-linux')">Using Mac/Linux/Codespaces?</button>
           <button id="show-advanced-button" class="bg-purple hover:bg-darkless text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('advanced')">Custom Setup</button>
@@ -84,12 +84,12 @@
           <p class="text-sm">For advanced users who want to manually configure their setup or have specific requirements.</p>
         </div>
         <p class="text-lg mb-4">Create or edit <code class="bg-darkless px-2 py-1 rounded text-cyan">~/.wakatime.cfg</code> with the following content:</p>
-        
+
         <div class="code-block bg-darkless rounded-lg p-4 mb-6">
           <code class="text-cyan text-sm">[settings]&#10;api_url = <%= api_hackatime_v1_url %>&#10;api_key = <%= @current_user_api_key %>&#10;heartbeat_rate_limit_seconds = 30</code>
           <button class="copy-button bg-primary hover:bg-red border-0 text-white px-6 py-2 rounded transition-colors cursor-pointer font-semibold" onclick="copy(this)">Copy</button>
         </div>
-        
+
         <div class="flex gap-4 flex-wrap">
           <button id="show-mac-linux-from-advanced-button" class="bg-green hover:bg-cyan text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('mac-linux')">Using Mac/Linux/Codespaces?</button>
           <button id="show-windows-from-advanced-button" class="bg-blue hover:bg-cyan text-white border-0 px-4 py-2 rounded transition-colors cursor-pointer" onclick="toggleSection('windows')">Using Windows?</button>
@@ -121,19 +121,19 @@
       mac.style.display = 'block';
     }
   }
-  
+
   document.addEventListener('turbo:load', function() {
     a();
-    
+
     window.toggleSection = function(section) {
       const mac = document.getElementById('mac-linux');
       const windows = document.getElementById('windows');
       const advanced = document.getElementById('advanced');
-      
+
       mac.style.display = 'block';
       windows.style.display = 'none';
       advanced.style.display = 'none';
-      
+
       if (section === 'windows') {
         windows.style.display = 'block';
       } else if (section === 'advanced') {
@@ -142,7 +142,7 @@
         mac.style.display = 'block';
       }
     }
-    
+
     const statusDiv = document.getElementById('heartbeat-status');
     const nextStepLink = document.getElementById('next-step');
     let checkCount = 0;
@@ -258,11 +258,11 @@
       flex-direction: column;
       align-items: stretch;
     }
-    
+
     .code-block code {
       margin-bottom: 1rem;
     }
-    
+
     iframe {
       height: 200px;
     }

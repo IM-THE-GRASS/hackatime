@@ -15,7 +15,7 @@ class My::ProjectRepoMappingsController < ApplicationController
 
   def update
     if @project_repo_mapping.new_record?
-      @project_repo_mapping.project_name = params[:project_name]
+      @project_repo_mapping.project_name = CGI.unescape(params[:project_name])
     end
 
     if @project_repo_mapping.update(project_repo_mapping_params)
@@ -40,8 +40,9 @@ class My::ProjectRepoMappingsController < ApplicationController
   end
 
   def set_project_repo_mapping
+    decoded_project_name = CGI.unescape(params[:project_name])
     @project_repo_mapping = current_user.project_repo_mappings.find_or_initialize_by(
-      project_name: params[:project_name]
+      project_name: decoded_project_name
     )
   end
 

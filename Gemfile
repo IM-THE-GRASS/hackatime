@@ -97,6 +97,8 @@ gem "countries"
 # Markdown parsing
 gem "redcarpet"
 
+gem "ruby_identicon"
+
 # Feature flags
 gem "flipper"
 gem "flipper-active_record"
